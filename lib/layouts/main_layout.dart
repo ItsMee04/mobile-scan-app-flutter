@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../features/dashboard/views/dashboard_view.dart';
+import '../features/profile/views/profile_view.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -15,7 +16,7 @@ class _MainLayoutState extends State<MainLayout> {
   final List<Widget> _pages = [
     const DashboardView(), // <-- Komponen dari fitur dashboard
     const Center(child: Text('Halaman Scan (Coming Soon)')),
-    const Center(child: Text('Halaman Profile (Coming Soon)')),
+    const ProfileView(), // <-- Komponen dari fitur profile
   ];
 
   @override
