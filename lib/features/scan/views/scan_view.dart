@@ -333,13 +333,50 @@ class _ScanViewState extends State<ScanView> {
           width: double.infinity,
           height: 55,
           child: ElevatedButton.icon(
-            onPressed: () {
-              // Tempat logika memasukkan data ke keranjang belanja
-            },
-            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
-            label: const Text(
-              'Tambah ke Keranjang',
-              style: TextStyle(
+            onPressed: controller.isActionLoading
+                ? null
+                : () async {
+                    try {
+                      final success = await controller.tambahKeKeranjang();
+                      if (success && context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Produk berhasil ditambahkan ke keranjang.',
+                            ),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                        Navigator.pop(context);
+                        controller.resetScan();
+                        cameraController.start();
+                      }
+                    } catch (e) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(e.toString()),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    }
+                  },
+            icon: controller.isActionLoading
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+            label: Text(
+              controller.isActionLoading
+                  ? 'Menambahkan...'
+                  : 'Tambah ke Keranjang',
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
