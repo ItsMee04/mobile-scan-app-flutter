@@ -57,4 +57,17 @@ class SessionService {
     }
     return 'User';
   }
+
+  static Future<bool> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Menghapus data token dan status login dari memori lokal HP
+    await prefs.remove('token');
+    await prefs.remove('user_name');
+    await prefs.remove(
+      'is_logged_in',
+    ); // sesuaikan dengan key yang Anda pakai di main.dart
+
+    return true;
+  }
 }

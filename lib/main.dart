@@ -7,6 +7,7 @@ import 'layouts/main_layout.dart';
 import 'features/authentication/views/login_view.dart';
 import 'features/dashboard/controllers/dashboard_controller.dart';
 import 'core/services/session_service.dart';
+import 'core/services/api_client.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,15 +56,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // Kita buat struktur MaterialApp tunggal yang memegang Theme secara utuh
     return MaterialApp(
       title: 'Trifecta Scan App',
       debugShowCheckedModeBanner: false,
+
+      // Daftarkan kedua key global dari ApiClient di sini
+      navigatorKey: ApiClient.navigatorKey,
+      scaffoldMessengerKey: ApiClient.snackbarKey, // <- Tambahkan baris ini
+
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF7B00)),
         useMaterial3: true,
       ),
-      // Di sini kita kendalikan tampilannya secara dinamis dan aman
       home: _isCheckingSession
           ? const Scaffold(
               backgroundColor: Color(0xFFFDF5E6),

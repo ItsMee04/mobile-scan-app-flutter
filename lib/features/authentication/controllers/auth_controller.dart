@@ -18,7 +18,7 @@ class AuthController extends ChangeNotifier {
   }) async {
     if (username.trim().isEmpty) {
       usernameFocus.requestFocus();
-      return 'Username/Email tidak boleh kosong!';
+      return 'Email tidak boleh kosong!';
     }
 
     if (password.trim().isEmpty) {

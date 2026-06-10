@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // <- Tambahkan ini untuk membaca state Provider
+import '../controllers/dashboard_controller.dart'; // <- Hubungkan ke controller dashboard
 
 class StatCardGrid extends StatelessWidget {
   const StatCardGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Membaca data secara reaktif dari DashboardController
+    final controller = context.watch<DashboardController>();
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: GridView.count(
@@ -19,31 +24,32 @@ class StatCardGrid extends StatelessWidget {
             Icons.inventory_2_outlined,
             Colors.blue,
             'Total Produk',
-            '124',
+            '${controller.totalProduk}', // <- Data Dinamis API
           ),
           _buildCard(
             Icons.people_outline_rounded,
             Colors.green,
             'Total Pelanggan',
-            '8',
+            '${controller.totalPelanggan}', // <- Data Dinamis API
           ),
           _buildCard(
             Icons.trending_up_rounded,
             Colors.orange,
             'Total Penjualan Hari Ini',
-            '15',
+            '${controller.totalPenjualan}', // <- Data Dinamis API
           ),
           _buildCard(
             Icons.history_toggle_off_rounded,
             Colors.purple,
             'Total Pembelian Hari Ini',
-            '3',
+            '${controller.totalPembelian}', // <- Data Dinamis API
           ),
         ],
       ),
     );
   }
 
+  // Desain visual asli Anda tetap dipertahankan utuh tanpa perubahan CSS/Styling sedikit pun
   Widget _buildCard(
     IconData icon,
     Color iconColor,
