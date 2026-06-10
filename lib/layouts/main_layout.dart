@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../features/dashboard/views/dashboard_view.dart';
 import '../features/profile/views/profile_view.dart';
+import '../features/scan/views/scan_view.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -15,7 +16,7 @@ class _MainLayoutState extends State<MainLayout> {
   // Pasang DashboardView asli di index 0
   final List<Widget> _pages = [
     const DashboardView(), // <-- Komponen dari fitur dashboard
-    const Center(child: Text('Halaman Scan (Coming Soon)')),
+    const ScanView(), // <-- Komponen dari fitur scan
     const ProfileView(), // <-- Komponen dari fitur profile
   ];
 

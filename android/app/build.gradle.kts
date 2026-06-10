@@ -19,7 +19,9 @@ android {
         applicationId = "com.example.mobile_scan_app_flutter"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        
+        minSdk = flutter.minSdkVersion // <-- UBAH DI SINI (Ganti dari flutter.minSdkVersion menjadi angka 23 langsung)
+        
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

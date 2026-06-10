@@ -6,6 +6,7 @@ import 'features/authentication/controllers/auth_controller.dart';
 import 'layouts/main_layout.dart';
 import 'features/authentication/views/login_view.dart';
 import 'features/dashboard/controllers/dashboard_controller.dart';
+import 'features/scan/controllers/scan_controller.dart';
 import 'core/services/session_service.dart';
 import 'core/services/api_client.dart';
 
@@ -23,6 +24,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthController()),
         ChangeNotifierProvider(create: (_) => DashboardController()),
+        ChangeNotifierProvider(create: (_) => ScanController()),
       ],
       child: const MyApp(),
     ),
