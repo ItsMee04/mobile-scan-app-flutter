@@ -59,7 +59,7 @@ class DashboardService {
       if (response.data is Map) {
         final dataResponse = response.data as Map<String, dynamic>;
 
-        if (dataResponse['status'] == true && dataResponse['data'] != null) {
+        if (dataResponse['success'] == true && dataResponse['data'] != null) {
           return int.tryParse(dataResponse['data'].toString()) ?? 0;
         }
       }
