@@ -6,6 +6,7 @@ import '../../../core/services/api_client.dart'; // Impor ApiClient untuk mengam
 import '../components/scan_header.dart';
 import '../components/scan_tips.dart';
 import '../controllers/scan_controller.dart';
+import '../../../core/widgets/app_alert.dart';
 
 class ScanView extends StatefulWidget {
   const ScanView({super.key});
@@ -338,30 +339,35 @@ class _ScanViewState extends State<ScanView> {
                 : () async {
                     try {
                       final success = await controller.tambahKeKeranjang();
-                      if (success && context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Produk berhasil ditambahkan ke keranjang.',
-                            ),
-                            backgroundColor: Colors.green,
-                          ),
+
+                      if (!context.mounted) return;
+
+                      if (success) {
+                        AppAlert.success(
+                          context,
+                          title: 'Berhasil',
+                          message: 'Produk berhasil ditambahkan ke keranjang.',
+                          onOk: () {
+                            Navigator.pop(context);
+                            controller.resetScan();
+                            cameraController.start();
+                          },
                         );
-                        Navigator.pop(context);
-                        controller.resetScan();
-                        cameraController.start();
+                      } else {
+                        AppAlert.error(
+                          context,
+                          title: 'Gagal',
+                          message: 'Produk gagal ditambahkan ke keranjang.',
+                        );
                       }
                     } catch (e) {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(e.toString()),
-                            backgroundColor: Colors.red,
-                            behavior: SnackBarBehavior.floating,
-                            margin: const EdgeInsets.all(16),
-                          ),
-                        );
-                      }
+                      if (!context.mounted) return;
+
+                      AppAlert.error(
+                        context,
+                        title: 'Error',
+                        message: e.toString().replaceFirst('Exception: ', ''),
+                      );
                     }
                   },
             icon: controller.isActionLoading
@@ -392,7 +398,9 @@ class _ScanViewState extends State<ScanView> {
             ),
           ),
         ),
+
         const SizedBox(height: 15),
+
         SizedBox(
           width: double.infinity,
           height: 55,
@@ -409,12 +417,6 @@ class _ScanViewState extends State<ScanView> {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.orange,
-              ),
-            ),
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.orange),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
               ),
             ),
           ),

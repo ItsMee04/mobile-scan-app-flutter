@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // <- Tambahkan ini
 import '../controllers/auth_controller.dart'; // <- Tambahkan ini
+import '../../../core/widgets/app_alert.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -129,14 +130,17 @@ class _LoginViewState extends State<LoginView> {
 
                               if (errorMessage != null) {
                                 // Jika ada pesan error, tampilkan di atas
-                                _showTopSnackBar(context, errorMessage);
+                                await AppAlert.error(
+                                  context,
+                                  message: errorMessage,
+                                );
                               } else {
                                 // Jika null, berarti sukses!
-                                _showTopSnackBar(
+                                await AppAlert.success(
                                   context,
-                                  'Login Berhasil!',
-                                  isSuccess: true,
+                                  message: 'Login Berhasil!',
                                 );
+                                if (!context.mounted) return;
                                 Navigator.pushReplacementNamed(
                                   context,
                                   '/dashboard',
@@ -226,34 +230,6 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
       ],
-    );
-  }
-
-  void _showTopSnackBar(
-    BuildContext context,
-    String message, {
-    bool isSuccess = false,
-  }) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        // Jika sukses warna hijau/biru, jika gagal warna orange khas Trifecta
-        backgroundColor: isSuccess ? Colors.green : const Color(0xFFFF7B00),
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 3),
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height - 100,
-          left: 20,
-          right: 20,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
     );
   }
 }
