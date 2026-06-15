@@ -355,7 +355,9 @@ class _ScanViewState extends State<ScanView> {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(e.toString()),
+                            content: Text(
+                              e.toString().replaceFirst('Exception: ', ''),
+                            ),
                             backgroundColor: Colors.red,
                           ),
                         );
