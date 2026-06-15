@@ -16,7 +16,7 @@ class ApiClient {
 
   ApiClient() {
     // Mengambil base URL dari file .env
-    final baseUrl = dotenv.env['API_URL'] ?? 'http://172.16.200.65:8000/api';
+    final baseUrl = dotenv.env['API_URL'] ?? 'http://192.168.1.215/api';
 
     _dio.options = BaseOptions(
       baseUrl: baseUrl,

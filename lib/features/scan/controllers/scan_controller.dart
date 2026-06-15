@@ -123,12 +123,18 @@ class ScanController extends ChangeNotifier {
       final response = await _transaksiService.storeProdukToTransaksiDetail(
         payload,
       );
-      return response.data['status'] == true;
+
+      if (response.data['status'] != true) {
+        throw response.data['message'] ??
+            'Gagal menambahkan produk ke keranjang';
+      }
+
+      return true;
     } on DioException catch (e) {
-      // Menangkap pesan gagal kustom dari Laravel (Misal: "Satu transaksi hanya boleh untuk satu produk emas")
       final String serverMessage =
           e.response?.data['message'] ??
           "Gagal menambahkan produk ke keranjang";
+
       throw serverMessage;
     } finally {
       _isActionLoading = false;
